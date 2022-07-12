@@ -1,11 +1,5 @@
 # Lista de exercícios - Condições
 
-
-from doctest import TestResults
-from sys import int_info
-from tkinter import FALSE
-
-
 def maior3(a, b, c):
 
         #receba 3 valores e retorna o maior deles
