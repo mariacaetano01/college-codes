@@ -1,4 +1,4 @@
-#Lista de Exercícios 1A - variáveis e operadores
+#Lista de Exercícios 1A 
 
 #recebe dois valores e devolve a soma deles
 def somainteiros (a,b):
