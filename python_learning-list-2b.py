@@ -1,8 +1,6 @@
 # Lista de exercícios - Condições (Adicional)
 
-
 from math import ceil
-
 
 def situacao_aluno(nota1, nota2, nota3, faltas, aulas_ministradas):
     #A média do aluno é dada pela média aritmética simples entre as 3 notas.
