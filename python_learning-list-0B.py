@@ -1,6 +1,5 @@
 # Lista de exercícios com testes
 
-
 def media_notas(nota1, nota2):
     
     media = (nota1 + nota2) / 2
