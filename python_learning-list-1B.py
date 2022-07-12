@@ -19,6 +19,7 @@ def trocaletras(texto):
         #vogais ficam maiúsculas e consoantes minúsculas;
         #argumento: texto (string) = um texto qualquer;
         #retorna texto convertido, conforme enunciado.
+        
     texto = texto.lower()
     texto = texto.replace("a","A")
     texto = texto.replace("e","E")
