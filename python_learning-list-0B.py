@@ -1,4 +1,5 @@
 # Lista de exercícios com testes
+# Operadores
 
 def media_notas(nota1, nota2):
     
