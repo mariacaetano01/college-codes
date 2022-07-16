@@ -42,7 +42,6 @@ def identificador(inicial, contador, incremento):
     lista_y = []
     lista_x = []
     x = inicial
-    c = 0
     for _ in range(contador):
         #valores dos coeficientes conforme tabela no Classroom
         y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + \
@@ -50,7 +49,6 @@ def identificador(inicial, contador, incremento):
         lista_y.append(y)
         lista_x.append(x)
         x += incremento
-        c += 1
 
     intervalos = []
     p = 1 #posicao
