@@ -23,6 +23,7 @@ SAÍDAS
     • O gráfico da iteração vs. o erro |xi-x(i-1)|
 '''
 
+
 def contador(inicial, final, incremento):
     # O contador vai definir um intervalo de x para calcular y
 
@@ -47,24 +48,23 @@ def valores_de_y(inicial, contador, incremento):
         lista_y.append(y)
         lista_x.append(x)
         x += incremento
-    return lista_y
+    return [lista_x,lista_y]
 
-
-def identificador(lista_y):
+def identificador(listas):
     # O identificador consiste em encontrar mudança de sinais entre os
     # resultados da equação
 
-    lista_valores_y = lista_y
-    intervalos_1 = []
-    intervalos_2 = []
+    lista_valores_x = listas [0]
+    lista_valores_y = listas[1]
+    intervalos_a = []
+    intervalos_b = []
     for pos, _ in enumerate(lista_valores_y):
-        if (lista_valores_y[pos] < 0 and lista_valores_y[(pos-1)] > 0) or (lista_valores_y[pos] > 0 and lista_valores_y[(pos-1)] < 0):
-            intervalos_1.append(lista_valores_y[pos-1])
-            intervalos_2.append(lista_valores_y[pos])
+        if pos > 0:
+             if (lista_valores_y[pos] < 0 and lista_valores_y[(pos-1)] > 0) or (lista_valores_y[pos] > 0 and lista_valores_y[(pos-1)] < 0):
+                intervalos_a.append(lista_valores_x[pos-1])
+                intervalos_b.append(lista_valores_x[pos])
 
-    del intervalos_1[0]
-    del intervalos_2[0]
-    intervalos = zip(intervalos_1, intervalos_2)
+    intervalos = zip(intervalos_a,intervalos_b)
     return list(intervalos)
 
 
@@ -72,7 +72,20 @@ def refinador(intervalos):
     # O refinador consiste em diminuir cada intervalo até atender o
     # critério de convergência e encontrar a aproximação da raiz da
     # equação
-    return 'Ainda não esá pronto'
+
+    inicio = cont = media = 0
+    for _ in intervalos:
+        cont += 2
+        intervalo = intervalos[inicio:cont]
+        while True:
+            media = sum(intervalo)/2
+
+            if media < 0:
+                intervalo[0] = media
+            intervalo[cont-1] = media
+            break
+        return intervalo
+    inicio += 2
 
 
 def main():
@@ -92,7 +105,9 @@ def main():
     print(identifica)
     print(' ')
 
+    # a = refinador(identifica)
+    # print(a)
+
 
 if __name__ == "__main__":
     main()
-
