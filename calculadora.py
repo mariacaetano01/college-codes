@@ -48,13 +48,15 @@ def identificador(inicial, contador, incremento):
         lista_x.append(x)
         x += incremento
 
-    intervalos = []
+    intervalos_1 = []
+    intervalos_2 = []
     for pos,_ in enumerate(lista_y):
         if (lista_y[pos] < 0 and lista_y[(pos-1)] > 0) or (lista_y[pos] > 0 and lista_y[(pos-1)] < 0):
-            intervalos.append(lista_y[pos-1])
-            intervalos.append(lista_y[pos])
-    return intervalos [2:]
-    
+            intervalos_1.append(lista_y[pos-1])
+            intervalos_2.append(lista_y[pos])
+
+    intervalos = zip(intervalos_1,intervalos_2)
+    return list(intervalos)
 
 
 def refinador():
