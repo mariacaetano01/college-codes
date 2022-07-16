@@ -23,17 +23,15 @@ SAÍDAS
     • O gráfico da iteração vs. o erro |xi-x(i-1)|
 '''
 
-print('Equação Polinomial: MARIA CAETANO')
-print('y = (a*(x^5)) + (b*(x^4)) + (c*(x^3)) + (d*(x^2)) + (e*x) + f')
-print('y = (1,65*(x^5)) + (-3,510*(x^4)) + (0,571*(x^3))+ (-17,1*(x^2)) + (-3,510*x) + 11,18')
-print('')
 
 def contador(inicial, final, incremento):
+    # O contador vai definir um intervalo de x para calcular y
     contador = 0
     while inicial <= final:
         contador += 1
         inicial += incremento
     return contador
+
 
 def identificador(inicial, contador, incremento):
     # O identificador consiste em encontrar mudança de sinais entre os
@@ -43,7 +41,7 @@ def identificador(inicial, contador, incremento):
     lista_x = []
     x = inicial
     for _ in range(contador):
-        #valores dos coeficientes conforme tabela no Classroom
+        # valores dos coeficientes conforme tabela no Classroom
         y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + \
             (-17.1*(x**2)) + (-3.510*x) + 11.18
         lista_y.append(y)
@@ -51,13 +49,15 @@ def identificador(inicial, contador, incremento):
         x += incremento
 
     intervalos = []
-    p = 1 #posicao
-    for _ in lista_y:
-        if (lista_y[p] < 0 and lista_y[(p-1)] > 0) or (lista_y[p] > 0 and lista_y[(p-1)] < 0):
-            intervalos.append(lista_y[p],lista_y[p-1])
-    return intervalos
+    for pos,_ in enumerate(lista_y):
+        if (lista_y[pos] < 0 and lista_y[(pos-1)] > 0) or (lista_y[pos] > 0 and lista_y[(pos-1)] < 0):
+            intervalos.append(lista_y[pos-1])
+            intervalos.append(lista_y[pos])
+    return intervalos [2:]
+    
 
-def refinador ():
+
+def refinador():
     # O refinador consiste em diminuir cada intervalo até atender o
     # critério de convergência e encontrar a aproximação da raiz da
     # equação
@@ -66,6 +66,11 @@ def refinador ():
 
 
 def main():
+    print('Equação Polinomial: MARIA CAETANO')
+    print('y = (a*(x^5)) + (b*(x^4)) + (c*(x^3)) + (d*(x^2)) + (e*x) + f')
+    print('y = (1,65*(x^5)) + (-3,510*(x^4)) + (0,571*(x^3))+ (-17,1*(x^2)) + (-3,510*x) + 11,18')
+    print('')
+
     valor_inicial = -20
     valor_final = 20
     incremento = 0.5
@@ -73,6 +78,7 @@ def main():
 
     y = identificador(valor_inicial, intervalo_de_contagem, incremento)
     print(y)
+
 
 if __name__ == "__main__":
     main()
