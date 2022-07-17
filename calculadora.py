@@ -100,20 +100,22 @@ def main():
     print('y = (a*(x^5)) + (b*(x^4)) + (c*(x^3)) + (d*(x^2)) + (e*x) + f')
     print('y = (1,65*(x^5)) + (-3,510*(x^4)) + (0,571*(x^3))+ (-17,1*(x^2)) + (-3,510*x) + 11,18')
     print('')
-
+    
     valor_inicial = -20
     valor_final = 20
     incremento = 0.5
-    intervalo_de_contagem = contador(valor_inicial, valor_final, incremento)
 
+    print('INTERVALOS COM MUDANÇA DE SINAL:')
+    intervalo_de_contagem = contador(valor_inicial, valor_final, incremento)
     valores = valores_de_y(valor_inicial, intervalo_de_contagem, incremento)
     identifica = identificador(valores)
-    print('INTERVALOS COM MUDANÇA DE SINAL:')
     print(identifica)
     print(' ')
 
+    print ('RAÍZES REFINADAS DA FUNÇÃO:')
     refina = refinador(identifica)
     print(refina)
+
 
 
 if __name__ == "__main__":
