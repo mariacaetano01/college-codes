@@ -22,6 +22,9 @@ SAÍDAS
     • As soluções encontradas e asociadas a cada intervalo
     • O gráfico da iteração vs. o erro |xi-x(i-1)|
 '''
+def funcao (x):
+    #funcao com base nos critérios do exercício
+    return (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18 
 
 
 def contador(inicial, final, incremento):
@@ -33,7 +36,6 @@ def contador(inicial, final, incremento):
         inicial += incremento
     return contador
 
-
 def valores_de_y(inicial, contador, incremento):
     # Os valores de y representam os valores de f(x) a serem
     # usados no identificador
@@ -43,29 +45,30 @@ def valores_de_y(inicial, contador, incremento):
     x = inicial
     for _ in range(contador):
         # valores dos coeficientes conforme tabela no Classroom
-        y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + \
-            (-17.1*(x**2)) + (-3.510*x) + 11.18
+        y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18 
         lista_y.append(y)
         lista_x.append(x)
         x += incremento
-    return [lista_x,lista_y]
+    return [lista_x, lista_y]
+
 
 def identificador(listas):
     # O identificador consiste em encontrar mudança de sinais entre os
     # resultados da equação
 
-    lista_valores_x = listas [0]
+    lista_valores_x = listas[0]
     lista_valores_y = listas[1]
     intervalos_a = []
     intervalos_b = []
     for pos, _ in enumerate(lista_valores_y):
         if pos > 0:
-             if (lista_valores_y[pos] < 0 and lista_valores_y[(pos-1)] > 0) or (lista_valores_y[pos] > 0 and lista_valores_y[(pos-1)] < 0):
+            if (lista_valores_y[pos] < 0 and lista_valores_y[(pos-1)] > 0) or (lista_valores_y[pos] > 0 and lista_valores_y[(pos-1)] < 0):
                 intervalos_a.append(lista_valores_x[pos-1])
                 intervalos_b.append(lista_valores_x[pos])
 
-    intervalos = zip(intervalos_a,intervalos_b)
-    return list(intervalos)
+    intervalos = tuple(zip(intervalos_a, intervalos_b))
+    intervalos = list(map(list, intervalos))
+    return intervalos
 
 
 def refinador(intervalos):
@@ -73,22 +76,26 @@ def refinador(intervalos):
     # critério de convergência e encontrar a aproximação da raiz da
     # equação
 
-    inicio = cont = media = 0
+    raizes = []
+    contador = x = 0
     for _ in intervalos:
-        cont += 2
-        intervalo = intervalos[inicio:cont]
+        intervalo = intervalos[contador]
         while True:
-            media = sum(intervalo)/2
+            #media = x para ficar dentro da função
+            x = sum(intervalo)/2
+            y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18 
+            if y < 0: intervalo[0] = x 
+            if y > 0: intervalo[1] = x 
+            if round(y) == 0 : break
+        raizes.append(intervalo)
+        contador += 1
+    return raizes
 
-            if media < 0:
-                intervalo[0] = media
-            intervalo[cont-1] = media
-            break
-        return intervalo
-    inicio += 2
-
+# def gráfico ():
+    #Função para criação do gráfico solicitado no exercício
 
 def main():
+
     print('EQUAÇÃO POLINOMIAL: MARIA CAETANO')
     print('y = (a*(x^5)) + (b*(x^4)) + (c*(x^3)) + (d*(x^2)) + (e*x) + f')
     print('y = (1,65*(x^5)) + (-3,510*(x^4)) + (0,571*(x^3))+ (-17,1*(x^2)) + (-3,510*x) + 11,18')
@@ -105,8 +112,8 @@ def main():
     print(identifica)
     print(' ')
 
-    # a = refinador(identifica)
-    # print(a)
+    refina = refinador(identifica)
+    print(refina)
 
 
 if __name__ == "__main__":
