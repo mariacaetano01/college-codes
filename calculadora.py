@@ -22,10 +22,13 @@ SAÍDAS
     • As soluções encontradas e asociadas a cada intervalo
     • O gráfico da iteração vs. o erro |xi-x(i-1)|
 '''
-def funcao (x):
-    #funcao com base nos critérios do exercício
-    return (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18 
 
+import matplotlib.pyplot
+
+def funcao(x):
+    # funcao com base nos critérios do exercício
+    return(1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18
+    
 
 def contador(inicial, final, incremento):
     # O contador vai definir um intervalo de x para calcular y
@@ -36,16 +39,16 @@ def contador(inicial, final, incremento):
         inicial += incremento
     return contador
 
+
 def valores_de_y(inicial, contador, incremento):
-    # Os valores de y representam os valores de f(x) a serem
-    # usados no identificador
+    # Os valores de y representam os valores de f(x) a serem usados no identificador
 
     lista_y = []
     lista_x = []
     x = inicial
     for _ in range(contador):
         # valores dos coeficientes conforme tabela no Classroom
-        y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18 
+        y = funcao(x)
         lista_y.append(y)
         lista_x.append(x)
         x += incremento
@@ -72,50 +75,58 @@ def identificador(listas):
 
 
 def refinador(intervalos):
-    # O refinador consiste em diminuir cada intervalo até atender o
-    # critério de convergência e encontrar a aproximação da raiz da
-    # equação
+    # O refinador consiste em diminuir cada intervalo até atender o critério
+    # de convergência e encontrar a aproximação da raiz da equação
 
     raizes = []
-    contador = x = 0
+    contador = 0
     for _ in intervalos:
         intervalo = intervalos[contador]
-        while True:
-            #media = x para ficar dentro da função
-            x = sum(intervalo)/2
-            y = (1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18 
-            if y < 0: intervalo[0] = x 
-            if y > 0: intervalo[1] = x 
-            if round(y) == 0 : break
-        raizes.append(intervalo)
+        x = intervalo[0]
+        y1 = funcao(x)
+        x = intervalo[1]
+        y2 = funcao(x)
+        if y2 < y1:
+            intervalo = [intervalo[1], intervalo[0]]
+        while abs((intervalo[0]) - (intervalo[1])) > 10**(-6):
+            x = (intervalo[0]+intervalo[1])/2  # x = media in while
+            y = funcao(x)
+            if y < 0:
+                intervalo[0] = x
+            if y > 0:
+                intervalo[1] = x
+        raizes.append(x)
         contador += 1
     return raizes
 
-# def gráfico ():
-    #Função para criação do gráfico solicitado no exercício
+# def gráfico (iteracao,erro):
+    # Função para criação do gráfico solicitado no exercício
+    
+    # matplotlib.pyplot.plot(iteracao,erro)
+    # matplotlib.pyplot.show()   
+
 
 def main():
 
     print('EQUAÇÃO POLINOMIAL: MARIA CAETANO')
-    print('y = (a*(x^5)) + (b*(x^4)) + (c*(x^3)) + (d*(x^2)) + (e*x) + f')
     print('y = (1,65*(x^5)) + (-3,510*(x^4)) + (0,571*(x^3))+ (-17,1*(x^2)) + (-3,510*x) + 11,18')
     print('')
-    
+
     valor_inicial = -20
     valor_final = 20
     incremento = 0.5
 
     print('INTERVALOS COM MUDANÇA DE SINAL:')
     intervalo_de_contagem = contador(valor_inicial, valor_final, incremento)
-    valores = valores_de_y(valor_inicial, intervalo_de_contagem, incremento)
+    valores = valores_de_y(valor_inicial, intervalo_de_contagem, incremento,)
     identifica = identificador(valores)
     print(identifica)
     print(' ')
 
-    print ('RAÍZES REFINADAS DA FUNÇÃO:')
+    print('RAÍZES REFINADAS DA FUNÇÃO:')
     refina = refinador(identifica)
     print(refina)
-
+    print(' ')
 
 
 if __name__ == "__main__":
