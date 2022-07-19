@@ -25,10 +25,11 @@ SAÍDAS
 
 import matplotlib.pyplot
 
+
 def funcao(x):
     # funcao com base nos critérios do exercício
     return(1.65*(x**5)) + (-3.510*(x**4)) + (0.571*(x**3)) + (-17.1*(x**2)) + (-3.510*x) + 11.18
-    
+
 
 def contador(inicial, final, incremento):
     # O contador vai definir um intervalo de x para calcular y
@@ -79,7 +80,10 @@ def refinador(intervalos):
     # de convergência e encontrar a aproximação da raiz da equação
 
     raizes = []
-    contador = 0
+    erro = []
+    iteracao = []
+    contador = i = 0
+
     for _ in intervalos:
         intervalo = intervalos[contador]
         x = intervalo[0]
@@ -95,19 +99,15 @@ def refinador(intervalos):
                 intervalo[0] = x
             if y > 0:
                 intervalo[1] = x
+            iteracao.append(i)
+            i += 1
+            erro.append(abs((intervalo[0]) - (intervalo[1])))
         raizes.append(x)
         contador += 1
-    return raizes
-
-# def gráfico (iteracao,erro):
-    # Função para criação do gráfico solicitado no exercício
-    
-    # matplotlib.pyplot.plot(iteracao,erro)
-    # matplotlib.pyplot.show()   
+    return raizes,erro,iteracao
 
 
 def main():
-
     print('EQUAÇÃO POLINOMIAL: MARIA CAETANO')
     print('y = (1,65*(x^5)) + (-3,510*(x^4)) + (0,571*(x^3))+ (-17,1*(x^2)) + (-3,510*x) + 11,18')
     print('')
@@ -124,10 +124,21 @@ def main():
     print(' ')
 
     print('RAÍZES REFINADAS DA FUNÇÃO:')
-    refina = refinador(identifica)
+    refina,erro,iteracao = refinador(identifica)
     print(refina)
     print(' ')
 
+    # print('GRÁFICO VALORES DE X vs VALORES DE Y')
+    # matplotlib.pyplot.plot(valores[0],valores[1])
+    # matplotlib.pyplot.show()
+
+    print ('GRÁFICO INTERCÇÃO vs. ERRO (TODOS INTERVALOS')
+    print ('Cada pico do gráfico representa um novo intervalo')
+    matplotlib.pyplot.title ('GRÁFICO INTERAÇÃO vs. ERRO')
+    matplotlib.pyplot.xlabel("Quantidade de Iterações")
+    matplotlib.pyplot.ylabel("Erro = |xi-x(i-1)|")
+    matplotlib.pyplot.plot(iteracao,erro)
+    matplotlib.pyplot.show()
 
 if __name__ == "__main__":
     main()
